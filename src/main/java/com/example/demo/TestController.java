@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -11,6 +13,9 @@ public class TestController {
 
 	@Autowired
 	private SimpMessagingTemplate simpMessagingTemplate;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@GetMapping(value = "/test")
 	public String test() {
@@ -25,5 +30,10 @@ public class TestController {
 	@MessageMapping("/input")
 	public void websocketTest(String input) {
 		System.out.println(input);
+	}
+
+	@GetMapping(value = "/users")
+	public List<User> getAllUsers() {
+		return userRepository.findAll();
 	}
 }
